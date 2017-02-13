@@ -1,0 +1,16 @@
+EWARM/**
+!*.icf
+!*.eww
+!*.ewp
+!*.ewd
+!*.s
+MDK-ARM/**
+!*.uvoptx
+!*.uvprojx
+!*.s
+SW4STM32/EEDrone/**
+!*.cproject
+!*.project
+!*.xml
+!*.ld
+SI/
