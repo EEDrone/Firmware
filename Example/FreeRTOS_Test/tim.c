@@ -50,7 +50,7 @@
 /* USER CODE END 0 */
 
 TIM_HandleTypeDef htim6;
-volatile uint32_t ulHighFrequencyTimerTicks;
+
 /* TIM6 init function */
 void MX_TIM6_Init(void)
 {

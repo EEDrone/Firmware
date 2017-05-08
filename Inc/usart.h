@@ -50,7 +50,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f7xx_hal.h"
-   
+  
 #include "main.h"
 
 /* USER CODE BEGIN Includes */
@@ -61,9 +61,16 @@ extern UART_HandleTypeDef huart5;
 extern UART_HandleTypeDef huart7;
 extern UART_HandleTypeDef huart8;
 extern UART_HandleTypeDef huart3;
-
+#define UART_RxBufferSize 256
 /* USER CODE BEGIN Private defines */
-
+typedef struct {
+	uint8_t *pDMA_Buffer;
+	uint16_t StartOfMsg;
+} TUart_Engine;
+typedef struct {
+  uint32_t Len;
+  uint8_t Data[UART_RxBufferSize];
+} TMsg;
 /* USER CODE END Private defines */
 
 extern void Error_Handler(void);
@@ -72,7 +79,7 @@ void MX_UART5_Init(void);
 void MX_UART7_Init(void);
 void MX_UART8_Init(void);
 void MX_USART3_UART_Init(void);
-
+int UART_ReceivedMSG(TMsg *Msg);
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */

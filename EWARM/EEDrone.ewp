@@ -1015,6 +1015,27 @@
         </file>
       </group>
       <group>
+        <name>UART_DMA_test</name>
+        <excluded>
+          <configuration>EEDrone</configuration>
+        </excluded>
+        <file>
+          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\main.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\stm32f7xx_hal_msp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\stm32f7xx_it.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\usart.c</name>
+        </file>
+      </group>
+      <group>
         <name>UART_Test</name>
         <excluded>
           <configuration>EEDrone</configuration>

@@ -34,16 +34,9 @@
 #include "stm32f7xx_hal.h"
 #include "stm32f7xx.h"
 #include "stm32f7xx_it.h"
-
+#include "stm32f7xx_ll_usart.h"
 /* USER CODE BEGIN 0 */
 
-#include "stm32f7xx_ll_usart.h"
-#include "stm32f7xx_ll_tim.h"
-
-extern UART_HandleTypeDef huart3;
-extern volatile uint32_t ulHighFrequencyTimerTicks;
-extern void osSystickHandler(void);
-extern void vUARTInterruptHandler( USART_TypeDef *USARTx );
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -161,13 +154,13 @@ void SysTick_Handler(void)
 
   /* USER CODE END SysTick_IRQn 0 */
   HAL_IncTick();
-    osSystickHandler();
- 
-  //HAL_SYSTICK_IRQHandler();
+  HAL_SYSTICK_IRQHandler();
   /* USER CODE BEGIN SysTick_IRQn 1 */
 
   /* USER CODE END SysTick_IRQn 1 */
 }
+
+
 
 /******************************************************************************/
 /* STM32F7xx Peripheral Interrupt Handlers                                    */
@@ -176,42 +169,6 @@ void SysTick_Handler(void)
 /* please refer to the startup file (startup_stm32f7xx.s).                    */
 /******************************************************************************/
 
-/**
-* @brief This function handles USART3 global interrupt.
-*/
-void USART3_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART3_IRQn 0 */
-//vUARTInterruptHandler(USART3);
-  /* USER CODE END USART3_IRQn 0 */
- // HAL_UART_IRQHandler(&huart3);
-  
-
-  /* USER CODE BEGIN USART3_IRQn 1 */
-
-  /* USER CODE END USART3_IRQn 1 */
-}
-/**
-* @brief This function handles TIM6 global interrupt, DAC1 and DAC2 underrun error interrupts.
-*/
-
-void TIM6_DAC_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM6_DAC_IRQn 0 */
-
-  /* USER CODE END TIM6_DAC_IRQn 0 */
-  /* Check whether update interrupt is pending */
-  if(LL_TIM_IsActiveFlag_UPDATE(TIM6) == 1)
-  {
-    /* Clear the update interrupt flag*/
-    LL_TIM_ClearFlag_UPDATE(TIM6);
-  }
-
-  /* USER CODE BEGIN TIM6_DAC_IRQn 1 */
-//HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_14); 
-    ulHighFrequencyTimerTicks++;
-  /* USER CODE END TIM6_DAC_IRQn 1 */
-}
 /* USER CODE BEGIN 1 */
 
 /* USER CODE END 1 */

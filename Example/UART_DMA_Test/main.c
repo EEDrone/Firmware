@@ -34,10 +34,8 @@
 #include "main.h"
 #include "stm32f7xx_hal.h"
 #include "usart.h"
-#include "tim.h"
 #include "gpio.h"
-#include "cmsis_os.h"
-#include <stdio.h>
+
 /* USER CODE BEGIN Includes */
 
 /* USER CODE END Includes */
@@ -47,24 +45,28 @@
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
 uint8_t receive;
-
+extern  TMsg Msg;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void Error_Handler(void);
-
+ extern const uint8_t aStringToSend[];
+  extern __IO uint8_t ubSend;
+  extern uint8_t ubSizeToSend;
 /* USER CODE BEGIN PFP */
 /* Private function prototypes -----------------------------------------------*/
 
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
-void MX_FREERTOS_Init(void);
+
 /* USER CODE END 0 */
+
 
 int main(void)
 {
+
 
   /* USER CODE BEGIN 1 */
 
@@ -81,26 +83,32 @@ int main(void)
   /* Initialize all configured peripherals */ 
   MX_GPIO_Init();
   MX_USART3_UART_Init();
-  MX_TIM6_Init();
+  
   /* USER CODE BEGIN 2 */
  // HAL_UART_Receive_IT(&huart3,(uint8_t *)&receive,1);
-  //printf("UART_Test");
   
-  /* Call init function for freertos objects (in freertos.c) */
-  MX_FREERTOS_Init();
-  
+  //printf("UART_Test\r\n");
+ 
+  /* User start transmission data through "TxBuffer" buffer */
 
-  /* Start scheduler */
-  osKernelStart();
-
+ //  HAL_UART_Transmit_DMA(&huart3, (uint8_t*)aStringToSend, ubSizeToSend);
   /* USER CODE END 2 */
-
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
   /* USER CODE END WHILE */
-    
+    int i;
+    i=HAL_GetTick();
+    while(HAL_GetTick()-i<50);
+   
+    if (UART_ReceivedMSG((TMsg*) &Msg)){
+      for(int i=0;i<Msg.Len;i++){
+           while (!LL_USART_IsActiveFlag_TXE(USART3));
+          LL_USART_TransmitData8(USART3, Msg.Data[i]); 
+      }
+        while (!LL_USART_IsActiveFlag_TC(USART3));
+    }
   /* USER CODE BEGIN 3 */
 
   }
@@ -180,7 +188,11 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  HAL_UART_Receive_IT(&huart3,(uint8_t *)&receive,1);
+   HAL_UART_Transmit(&huart3, (uint8_t *)&receive, 1, 0xFFFF);
+}
 /* USER CODE END 4 */
 
 /**

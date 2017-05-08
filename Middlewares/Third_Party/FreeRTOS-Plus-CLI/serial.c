@@ -80,6 +80,7 @@
 #include "stm32f7xx_hal.h"
 /* Demo application includes. */
 #include "serial.h"
+#include "usart.h"
 #include "stm32f7xx_ll_usart.h"
 /*-----------------------------------------------------------*/
 
@@ -91,13 +92,11 @@
 /*-----------------------------------------------------------*/
 
 /* The queue used to hold received characters. */
-static QueueHandle_t xRxedChars;
-static QueueHandle_t xCharsForTx;
+//static QueueHandle_t xRxedChars;
+//static QueueHandle_t xCharsForTx;
 
 /*-----------------------------------------------------------*/
 
-/* UART interrupt handler. */
-void vUARTInterruptHandler( USART_TypeDef *USARTx );
 
 /*-----------------------------------------------------------*/
 
@@ -109,8 +108,8 @@ xComPortHandle xSerialPortInitMinimal( unsigned long ulWantedBaud, unsigned port
 xComPortHandle xReturn;
 
 	/* Create the queues used to hold Rx/Tx characters. */
-	xRxedChars = xQueueCreate( uxQueueLength, ( unsigned portBASE_TYPE ) sizeof( signed char ) );
-	xCharsForTx = xQueueCreate( uxQueueLength + 1, ( unsigned portBASE_TYPE ) sizeof( signed char ) );
+//	xRxedChars = xQueueCreate( uxQueueLength, ( unsigned portBASE_TYPE ) sizeof( signed char ) );
+//	xCharsForTx = xQueueCreate( uxQueueLength + 1, ( unsigned portBASE_TYPE ) sizeof( signed char ) );
 	
         
       xReturn =   USART3;
@@ -119,22 +118,7 @@ xComPortHandle xReturn;
 }
 /*-----------------------------------------------------------*/
 
-signed portBASE_TYPE xSerialGetChar( xComPortHandle pxPort, signed char *pcRxedChar, TickType_t xBlockTime )
-{
-	/* The port handle is not required as this driver only supports one port. */
-	( void ) pxPort;
 
-	/* Get the next character from the buffer.  Return false if no characters
-	are available, or arrive before xBlockTime expires. */
-	if( xQueueReceive( xRxedChars, pcRxedChar, xBlockTime ) )
-	{
-		return pdTRUE;
-	}
-	else
-	{
-		return pdFALSE;
-	}
-}
 /*-----------------------------------------------------------*/
 
 void vSerialPutString( xComPortHandle pxPort, const signed char * const pcString, unsigned short usStringLength )
@@ -163,19 +147,10 @@ signed char *pxNext;
 
 signed portBASE_TYPE xSerialPutChar( xComPortHandle pxPort, signed char cOutChar, TickType_t xBlockTime )
 {
-signed portBASE_TYPE xReturn;
-
-	if( xQueueSend( xCharsForTx, &cOutChar, xBlockTime ) == pdPASS )
-	{
-		xReturn = pdPASS;
-		//USART_ITConfig( USART1, USART_IT_TXE, ENABLE );
-                LL_USART_EnableIT_TXE(pxPort); 
-	}
-	else
-	{
-		xReturn = pdFAIL;
-	}
-
+signed portBASE_TYPE xReturn;      
+               while (!LL_USART_IsActiveFlag_TXE(USART3));
+                          LL_USART_TransmitData8(USART3, cOutChar); 
+        xReturn = pdPASS;   
 	return xReturn;
 }
 /*-----------------------------------------------------------*/
@@ -186,42 +161,8 @@ void vSerialClose( xComPortHandle xPort )
 }
 /*-----------------------------------------------------------*/
 
-void vUARTInterruptHandler( USART_TypeDef *USARTx )
-{
-portBASE_TYPE xHigherPriorityTaskWoken = pdFALSE;
-char cChar;
 
-
- /* Check RXNE flag value in ISR register */
-  if(LL_USART_IsActiveFlag_RXNE(USARTx) && LL_USART_IsEnabledIT_RXNE(USARTx))
-  {
-    /* RXNE flag will be cleared by reading of RDR register (done in call) */
-    /* Call function in charge of handling Character reception */
-        cChar = LL_USART_ReceiveData8(USARTx);
-      xQueueSendFromISR( xRxedChars, &cChar, &xHigherPriorityTaskWoken );
-  }
-  if(LL_USART_IsEnabledIT_TXE(USARTx) && LL_USART_IsActiveFlag_TXE(USARTx))
-  {
-  if( xQueueReceiveFromISR( xCharsForTx, &cChar, &xHigherPriorityTaskWoken ) == pdTRUE )
-		{
-			/* A character was retrieved from the queue so can be sent to the
-			THR now. */
-			//USART_SendData( USART1, cChar );
-                          LL_USART_TransmitData8(USARTx, cChar); 
-		}
-		else
-		{
-                      /* Disable TXE interrupt */
-                      LL_USART_DisableIT_TXE(USARTx);
-			//USART_ITConfig( USART1, USART_IT_TXE, DISABLE );		
-		}	
-  }
-	
-	portEND_SWITCHING_ISR( xHigherPriorityTaskWoken );
-}
-
-
-
+  
 
 
 	

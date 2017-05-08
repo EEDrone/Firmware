@@ -72,6 +72,7 @@
  */
 
 /* Standard includes. */
+
 #include "string.h"
 #include "stdio.h"
 
@@ -85,7 +86,7 @@
 
 /* Demo application includes. */
 #include "serial.h"
-
+#include "usart.h"
 /* Dimensions the buffer into which input characters are placed. */
 #define cmdMAX_INPUT_SIZE		50
 
@@ -125,7 +126,7 @@ static SemaphoreHandle_t xTxMutex = NULL;
 
 /* The handle to the UART port, which is not used by all ports. */
 static xComPortHandle xPort = 0;
-
+extern TMsg Msg;
 /*-----------------------------------------------------------*/
 
 void vUARTCommandConsoleStart( uint16_t usStackSize, UBaseType_t uxPriority )
@@ -143,7 +144,15 @@ void vUARTCommandConsoleStart( uint16_t usStackSize, UBaseType_t uxPriority )
 					NULL );						/* A handle is not required, so just pass NULL. */
 }
 /*-----------------------------------------------------------*/
-
+void vOutputString( const char * const pcMessage )
+{
+	if( xSemaphoreTake( xTxMutex, cmdMAX_MUTEX_WAIT ) == pdPASS )
+	{
+		vSerialPutString( xPort, ( signed char * ) pcMessage, ( unsigned short ) strlen( pcMessage ) );
+                  
+		xSemaphoreGive( xTxMutex );
+	}
+}
 static void prvUARTCommandConsoleTask( void *pvParameters )
 {
 signed char cRxedChar;
@@ -166,16 +175,21 @@ xComPortHandle xPort;
 	/* Send the welcome message. */
 	vSerialPutString( xPort, ( signed char * ) pcWelcomeMessage, ( unsigned short ) strlen( pcWelcomeMessage ) );
 
+ 
 	for( ;; )
 	{
 		/* Wait for the next character.  The while loop is used in case
 		INCLUDE_vTaskSuspend is not set to 1 - in which case portMAX_DELAY will
 		be a genuine block time rather than an infinite block time. */
-		while( xSerialGetChar( xPort, &cRxedChar, portMAX_DELAY ) != pdPASS );
-
+		//while( xSerialGetChar( xPort, &cRxedChar, 0 ) != pdPASS );
+                while( !UART_ReceivedMSG((TMsg*) &Msg));
+                 for(int i=0;i<Msg.Len;i++){
+                   cRxedChar=Msg.Data[i];
 		/* Ensure exclusive access to the UART Tx. */
 		if( xSemaphoreTake( xTxMutex, cmdMAX_MUTEX_WAIT ) == pdPASS )
 		{
+                  
+                  
 			/* Echo the character back. */
 			xSerialPutChar( xPort, cRxedChar, portMAX_DELAY );
 
@@ -254,17 +268,11 @@ xComPortHandle xPort;
 			/* Must ensure to give the mutex back. */
 			xSemaphoreGive( xTxMutex );
 		}
-	}
+                 }
+        }
 }
 /*-----------------------------------------------------------*/
 
-void vOutputString( const char * const pcMessage )
-{
-	if( xSemaphoreTake( xTxMutex, cmdMAX_MUTEX_WAIT ) == pdPASS )
-	{
-		vSerialPutString( xPort, ( signed char * ) pcMessage, ( unsigned short ) strlen( pcMessage ) );
-		xSemaphoreGive( xTxMutex );
-	}
-}
+
 /*-----------------------------------------------------------*/
 

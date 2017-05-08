@@ -94,7 +94,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the thread(s) */
   /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
+  osThreadDef(defaultTask, StartDefaultTask, osPriorityAboveNormal, 0, 128);
   defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
 vUARTCommandConsoleStart( 1000, 1 );
 vRegisterSampleCLICommands();
@@ -108,14 +108,19 @@ vRegisterSampleCLICommands();
 }
 
 /* StartDefaultTask function */
+
 void StartDefaultTask(void const * argument)
 {
-
+int i=0; 
+char pcWriteBuffer[10];
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
   for(;;)
-  {
-    osDelay(1);
+  { osDelay(1000);
+   i++;
+    sprintf(pcWriteBuffer,"%d",i);
+  vOutputString(pcWriteBuffer);
+  // vOutputString("123");
   }
   /* USER CODE END StartDefaultTask */
 }

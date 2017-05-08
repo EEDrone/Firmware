@@ -215,7 +215,7 @@ void UART_Error_Callback(void)
     - Perform corresponding error handling treatment according to flag
   */
   isr_reg = LL_USART_ReadReg(USART3, ISR);
-  if (isr_reg & LL_USART_ISR_NE)
+ if (isr_reg & LL_USART_ISR_NE)
   {
     /* case Noise Error flag is raised : ... */
    // LED_Blinking(LED_BLINK_FAST);
