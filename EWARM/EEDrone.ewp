@@ -318,6 +318,11 @@
           <state>$PROJ_DIR$/../Inc</state>
           <state>$PROJ_DIR$/../Drivers/STM32F7xx_HAL_Driver/Inc</state>
           <state>$PROJ_DIR$/../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy</state>
+          <state>$PROJ_DIR$/../Drivers/BSP</state>
+          <state>$PROJ_DIR$/../Drivers/BSP/Common</state>
+          <state>$PROJ_DIR$/../Drivers/BSP/lsm6dsm</state>
+          <state>$PROJ_DIR$/../Drivers/BSP/lsm303agr</state>
+          <state>$PROJ_DIR$/../Example/Sensor_Test</state>
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FatFs/src/drivers</state>
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/portable/IAR/ARM_CM7/r0p1</state>
           <state>$PROJ_DIR$/../Middlewares/ST/STM32_USB_Device_Library/Core/Inc</state>
@@ -986,6 +991,9 @@
       <name>Example</name>
       <group>
         <name>FreeRTOS_Test</name>
+        <excluded>
+          <configuration>EEDrone</configuration>
+        </excluded>
         <file>
           <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\freertos.c</name>
         </file>
@@ -1012,6 +1020,48 @@
         </file>
         <file>
           <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\usart.c</name>
+        </file>
+      </group>
+      <group>
+        <name>Sensor_Test</name>
+        <file>
+          <name>$PROJ_DIR$\..\Inc\config.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\freertos.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\gpio.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\main.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\Sample-CLI-commands.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\spi.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\spi.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\stm32f7xx_hal_msp.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\stm32f7xx_it.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\system.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\system.h</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\tim.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\Sensor_Test\usart.c</name>
         </file>
       </group>
       <group>
@@ -1130,6 +1180,21 @@
   <group>
     <name>Drivers</name>
     <group>
+      <name>BSP</name>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\BSP\BSP_accelero.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\BSP\BSP_gyro.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\BSP\lsm6dsm\LSM6DSM_ACC_GYRO_driver.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\BSP\lsm6dsm\LSM6DSM_ACC_GYRO_driver_HL.c</name>
+      </file>
+    </group>
+    <group>
       <name>CMSIS</name>
       <file>
         <name>$PROJ_DIR$\..\Src\system_stm32f7xx.c</name>
@@ -1223,6 +1288,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_sdmmc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_spi.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_tim.c</name>

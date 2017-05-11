@@ -197,9 +197,13 @@ int UART_ReceivedMSG(TMsg *Msg)
 {
   uint16_t j, k, l;
   uint16_t DmaCounter, length;
+  
+  
   if(__HAL_DMA_GET_FLAG(&hdma_rx, __HAL_DMA_GET_FE_FLAG_INDEX(&hdma_rx)) == RESET)
   {
+  
     DmaCounter = UART_RxBufferSize - __HAL_DMA_GET_COUNTER(&hdma_rx);
+    
     if (DmaCounter >= Uart_Engine.StartOfMsg)
     {
       length = DmaCounter - Uart_Engine.StartOfMsg;
@@ -213,6 +217,7 @@ int UART_ReceivedMSG(TMsg *Msg)
     j = Uart_Engine.StartOfMsg;
     l=j;
          Msg->Len = length;
+         
          for(k=0;k<length;k++){
            Msg->Data[k]=UART_RxBuffer[l];
            l++;

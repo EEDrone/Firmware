@@ -106,6 +106,11 @@ char *FreeRTOS_CLIGetOutputBuffer( void );
  */
 const char *FreeRTOS_CLIGetParameter( const char *pcCommandString, UBaseType_t uxWantedParameter, BaseType_t *pxParameterStringLength );
 
+extern void vOutputString( const char * const pcMessage );
+extern void vUARTCommandConsoleStart( uint16_t usStackSize, UBaseType_t uxPriority );
+
+
+
 #endif /* COMMAND_INTERPRETER_H */
 
 
