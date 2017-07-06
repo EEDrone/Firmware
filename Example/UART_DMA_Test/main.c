@@ -82,7 +82,7 @@ int main(void)
 
   /* Initialize all configured peripherals */ 
   MX_GPIO_Init();
-  MX_USART3_UART_Init();
+  MX_USART3_DMA_Init();
   
   /* USER CODE BEGIN 2 */
  // HAL_UART_Receive_IT(&huart3,(uint8_t *)&receive,1);

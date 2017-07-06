@@ -195,7 +195,7 @@ static DrvStatusTypeDef BSP_LSM6DSM_ACCELERO_Init( void **handle )
   }
   
   /* Configure interrupt lines for LSM6DSM */
-  LSM6DSM_Sensor_IO_ITConfig();
+ // LSM6DSM_Sensor_IO_ITConfig();
   
   return COMPONENT_OK;
 }

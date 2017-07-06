@@ -136,7 +136,7 @@
         </option>
         <option>
           <name>OGUseCmsisDspLib</name>
-          <state>0</state>
+          <state>1</state>
         </option>
         <option>
           <name>GRuntimeLibThreads</name>
@@ -187,6 +187,8 @@
           <name>CCDefines</name>
           <state>USE_HAL_DRIVER</state>
           <state>STM32F767xx</state>
+          <state>ARM_MATH_CM7</state>
+          <state>__FPU_PRESENT=1</state>
         </option>
         <option>
           <name>CCPreprocFile</name>
@@ -318,9 +320,11 @@
           <state>$PROJ_DIR$/../Inc</state>
           <state>$PROJ_DIR$/../Drivers/STM32F7xx_HAL_Driver/Inc</state>
           <state>$PROJ_DIR$/../Drivers/STM32F7xx_HAL_Driver/Inc/Legacy</state>
+          <state>$PROJ_DIR$/../Drivers</state>
           <state>$PROJ_DIR$/../Drivers/BSP</state>
           <state>$PROJ_DIR$/../Drivers/BSP/Common</state>
           <state>$PROJ_DIR$/../Drivers/BSP/lsm6dsm</state>
+          <state>$PROJ_DIR$/../Drivers/BSP/mpu9250</state>
           <state>$PROJ_DIR$/../Drivers/BSP/lsm303agr</state>
           <state>$PROJ_DIR$/../Example/Sensor_Test</state>
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FatFs/src/drivers</state>
@@ -333,6 +337,11 @@
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/include</state>
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</state>
           <state>$PROJ_DIR$/../Drivers/CMSIS/Include</state>
+          <state>$PROJ_DIR$/../Modules/Math</state>
+          <state>$PROJ_DIR$/../Modules/AHRS</state>
+          <state>$PROJ_DIR$/../Modules/Matrix</state>
+          <state>$PROJ_DIR$/../Modules/Mavlink</state>
+          <state>$PROJ_DIR$/../Modules/Mavlink/common</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -990,6 +999,27 @@
     <group>
       <name>Example</name>
       <group>
+        <name>AHRS_Test</name>
+        <excluded>
+          <configuration>EEDrone</configuration>
+        </excluded>
+        <file>
+          <name>$PROJ_DIR$\..\Example\AHRS_Test\main.c</name>
+        </file>
+        <file>
+          <name>$PROJ_DIR$\..\Example\AHRS_Test\system.c</name>
+        </file>
+      </group>
+      <group>
+        <name>DSP_Test</name>
+        <excluded>
+          <configuration>EEDrone</configuration>
+        </excluded>
+        <file>
+          <name>$PROJ_DIR$\..\Example\DSP_Test\main.c</name>
+        </file>
+      </group>
+      <group>
         <name>FreeRTOS_Test</name>
         <excluded>
           <configuration>EEDrone</configuration>
@@ -1001,67 +1031,34 @@
           <name>$PROJ_DIR$\..\Inc\FreeRTOSConfig.h</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\gpio.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\main.c</name>
         </file>
+      </group>
+      <group>
+        <name>Mavlink_Test</name>
         <file>
-          <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\Sample-CLI-commands.c</name>
+          <name>$PROJ_DIR$\..\Example\MavLink_Test\main.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\stm32f7xx_hal_msp.c</name>
+          <name>$PROJ_DIR$\..\Example\MavLink_Test\mavlink.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\stm32f7xx_it.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\tim.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\FreeRTOS_Test\usart.c</name>
+          <name>$PROJ_DIR$\..\Example\MavLink_Test\system.c</name>
         </file>
       </group>
       <group>
         <name>Sensor_Test</name>
+        <excluded>
+          <configuration>EEDrone</configuration>
+        </excluded>
         <file>
           <name>$PROJ_DIR$\..\Inc\config.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\freertos.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\gpio.c</name>
         </file>
         <file>
           <name>$PROJ_DIR$\..\Example\Sensor_Test\main.c</name>
         </file>
         <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\Sample-CLI-commands.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\spi.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\spi.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\stm32f7xx_hal_msp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\stm32f7xx_it.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\Example\Sensor_Test\system.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\system.h</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\tim.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\Sensor_Test\usart.c</name>
         </file>
       </group>
       <group>
@@ -1070,19 +1067,7 @@
           <configuration>EEDrone</configuration>
         </excluded>
         <file>
-          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\gpio.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\Example\UART_DMA_Test\main.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\stm32f7xx_hal_msp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\stm32f7xx_it.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\UART_DMA_Test\usart.c</name>
         </file>
       </group>
       <group>
@@ -1091,19 +1076,7 @@
           <configuration>EEDrone</configuration>
         </excluded>
         <file>
-          <name>$PROJ_DIR$\..\Example\UART_Test\gpio.c</name>
-        </file>
-        <file>
           <name>$PROJ_DIR$\..\Example\UART_Test\main.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\UART_Test\stm32f7xx_hal_msp.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\UART_Test\stm32f7xx_it.c</name>
-        </file>
-        <file>
-          <name>$PROJ_DIR$\..\Example\UART_Test\usart.c</name>
         </file>
       </group>
     </group>
@@ -1192,6 +1165,9 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\Drivers\BSP\lsm6dsm\LSM6DSM_ACC_GYRO_driver_HL.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\BSP\mpu9250\mpu9250.c</name>
       </file>
     </group>
     <group>
@@ -1302,6 +1278,24 @@
         <name>$PROJ_DIR$\..\Drivers\STM32F7xx_HAL_Driver\Src\stm32f7xx_ll_usb.c</name>
       </file>
     </group>
+    <file>
+      <name>$PROJ_DIR$\..\Drivers\gpio.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Drivers\spi.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Drivers\stm32f7xx_hal_msp.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Drivers\stm32f7xx_it.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Drivers\tim.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Drivers\usart.c</name>
+    </file>
   </group>
   <group>
     <name>Middlewares</name>
@@ -1325,6 +1319,9 @@
     </group>
     <group>
       <name>FreeRTOS</name>
+      <file>
+        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS-Plus-CLI\CLI_Commands.c</name>
+      </file>
       <file>
         <name>$PROJ_DIR$\..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS\cmsis_os.c</name>
       </file>
@@ -1380,6 +1377,27 @@
         <name>$PROJ_DIR$\..\Middlewares\ST\STM32_USB_Device_Library\Core\Src\usbd_ioreq.c</name>
       </file>
     </group>
+  </group>
+  <group>
+    <name>Modules</name>
+    <file>
+      <name>$PROJ_DIR$\..\Modules\AHRS\CKF.C</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Modules\AHRS\EKF.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Modules\AHRS\INS_EKF.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Modules\AHRS\Quaternion.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Modules\AHRS\SRCKF.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\Modules\AHRS\UKF.c</name>
+    </file>
   </group>
 </project>
 

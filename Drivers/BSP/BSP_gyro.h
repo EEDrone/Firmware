@@ -46,6 +46,7 @@ extern "C" {
 /* Includes ------------------------------------------------------------------*/
 #include "LSM6DSM_ACC_GYRO_driver_HL.h"
 #include "spi.h"
+  #include "mpu9250.h"
 
 
 /** @addtogroup BSP 
@@ -68,6 +69,7 @@ typedef enum
 {
   GYRO_SENSORS_AUTO = -1,        /* Always first element and equal to -1 */
   LSM6DSM_G_0,                   /* Default on board. */
+  MPU9250,
 } GYRO_ID_t;
 
 /**

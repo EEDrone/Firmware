@@ -174,12 +174,6 @@ void SystemClock_Config(void)
   HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
 }
 
-/* USER CODE BEGIN 4 */
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-  HAL_UART_Receive_IT(&huart3,(uint8_t *)&receive,1);
-   HAL_UART_Transmit(&huart3, (uint8_t *)&receive, 1, 0xFFFF);
-}
 /* USER CODE END 4 */
 
 /**

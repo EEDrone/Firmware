@@ -60,9 +60,7 @@ osThreadId defaultTaskHandle;
 /* Function prototypes -------------------------------------------------------*/
 void StartDefaultTask(void const * argument);
 
-extern void MX_FATFS_Init(void);
-extern void MX_LWIP_Init(void);
-extern void MX_USB_DEVICE_Init(void);
+
 extern void vRegisterSampleCLICommands( void );
 extern void vUARTCommandConsoleStart( uint16_t usStackSize, UBaseType_t uxPriority );
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
@@ -77,7 +75,6 @@ void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
 void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN Init */
-
   /* USER CODE END Init */
 
   /* USER CODE BEGIN RTOS_MUTEX */
@@ -116,11 +113,11 @@ char pcWriteBuffer[10];
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
   for(;;)
-  { osDelay(1000);
+    
+  { 
+    vTaskDelay(1000);
    i++;
     sprintf(pcWriteBuffer,"%d",i);
-  vOutputString(pcWriteBuffer);
-  // vOutputString("123");
   }
   /* USER CODE END StartDefaultTask */
 }

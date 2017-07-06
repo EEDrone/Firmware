@@ -50,6 +50,9 @@
 
  #include "stm32f7xx_ll_usart.h"
      #include "stm32f7xx_ll_dma.h"
+
+
+
  //      #include "stm32f7xx_ll_gpio.h"
   //  #include "stm32f7xx_ll_bus.h"
  //   #include "stm32f7xx_ll_rcc.h"
@@ -59,7 +62,7 @@
 
 
 /* USER CODE BEGIN Private defines */
-static volatile uint32_t ulHighFrequencyTimerTicks;
+
 /* USER CODE END Private defines */
 
 /**

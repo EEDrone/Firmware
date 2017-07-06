@@ -126,7 +126,7 @@ void vSerialPutString( xComPortHandle pxPort, const signed char * const pcString
 signed char *pxNext;
 
 	/* A couple of parameters that this port does not use. */
-	( void ) usStringLength;
+	//( void ) usStringLength;
 	( void ) pxPort;
 
 	/* NOTE: This implementation does not handle the queue being full as no
@@ -137,11 +137,16 @@ signed char *pxNext;
 
 	/* Send each character in the string, one at a time. */
 	pxNext = ( signed char * ) pcString;
-	while( *pxNext )
-	{
-		xSerialPutChar( pxPort, *pxNext, serNO_BLOCK );
-		pxNext++;
-	}
+	//while( *pxNext )
+	//{
+	//	xSerialPutChar( pxPort, *pxNext, serNO_BLOCK );
+	//	pxNext++;
+	//}
+        for(int i=0;i<usStringLength;i++){
+          xSerialPutChar( pxPort, *pxNext, serNO_BLOCK );
+          pxNext++;
+        }
+        
 }
 /*-----------------------------------------------------------*/
 

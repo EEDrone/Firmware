@@ -82,6 +82,8 @@ task.h is included from an application file. */
 #include "timers.h"
 #include "StackMacros.h"
 
+volatile uint32_t ulHighFrequencyTimerTicks;
+
 /* Lint e961 and e750 are suppressed as a MISRA exception justified because the
 MPU ports require MPU_WRAPPERS_INCLUDED_FROM_API_FILE to be defined for the
 header files above, but not in this file, in order to generate the correct

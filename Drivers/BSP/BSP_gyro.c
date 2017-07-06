@@ -109,6 +109,14 @@ DrvStatusTypeDef BSP_GYRO_Init( GYRO_ID_t id, void **handle )
       }
       break;
     }
+        case MPU9250:
+    {
+      if( MPU9250_Init(handle) == COMPONENT_ERROR )
+      {
+        return COMPONENT_ERROR;
+      }
+      break;
+    }
   }
   
   return COMPONENT_OK;

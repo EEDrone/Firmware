@@ -62,7 +62,7 @@ void Error_Handler(void);
 /* USER CODE BEGIN 0 */
 void MX_FREERTOS_Init(void);
 /* USER CODE END 0 */
-
+ 
 int main(void)
 {
 
@@ -80,7 +80,7 @@ int main(void)
 
   /* Initialize all configured peripherals */ 
   MX_GPIO_Init();
-  MX_USART3_UART_Init();
+  MX_USART3_DMA_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
  // HAL_UART_Receive_IT(&huart3,(uint8_t *)&receive,1);
